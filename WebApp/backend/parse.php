@@ -1,7 +1,10 @@
 <?php 
+  require 'database.php';
+  $db = getDB();
   $user_lat = $request->getParam('latitude');
   $user_long = $request->getParam('longitude');
   $user_time = $request->getParam('timestamp');
+  $message = $request->getParam('message');
 
   try{
     $mtl_lat = 45.5017;
@@ -20,6 +23,12 @@
 
     if($d<100){
       echo "within city";
+      $query = "INSERT INTO `client` (`message`) VALUES (?)";
+      $stmt = $db->prepare($query);
+      $stmt->execute([$message]);
+      echo '<script language="javascript">';
+      echo 'alert("message successfully sent")';
+      echo '</script>';
     }
     else{
       echo "not within city";
