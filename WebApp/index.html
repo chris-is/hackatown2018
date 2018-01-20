@@ -40,11 +40,35 @@
         <h1 class="heading">Fast &amp; Anonymously</h1>
         <p class="paragraph-3">WatchMTL is fast and provides user with anonymity. Residents can report something without worrying about personal information being leaked.</p><a href="#" data-w-id="ff60a114-4621-a127-d1f2-67a36c8c272a" class="button-4 w-button">Report</a></div>
       <div data-w-id="88d99c0e-e026-9737-4ceb-c5d4655aff10" class="user-msg w-container">
-        <h1 class="heading-3">SAY SOMETHING</h1>
+        <h1 class="heading-3">What do you see</h1>
         <div class="form-block w-form">
           <textarea class="textarea w-input" maxlength="5000" autofocus="true" name="user-report" data-name="msg" placeholder="Say something that includes the event and location" id="user-report" required=""></textarea>
             <p class="p4">Example</p>
             <p class="p5">There is a fire on 5th floor on the Saint Catherine Street No.114, please send someone!<br>A pipe is broken on intersection of Penfield street and McTavish leaking water!<br>The road on Sherbrooke street has traffic</p><input type="submit" value="Report" data-wait="Please wait..." class="submit-button w-button"></form>
+
+          
+          <!--Send http post request to Slim using Ajax-->
+          <script>
+            $(document).ready(function() {
+              var base_url="http://localhost/mtlwatch/WebApp/";
+              var url = base_url+'posted';
+              $("form-block w-form").on("click","submit-button w-button", function() {
+                var update = $('.textarea w-input').val();
+                var postdata = "message="+update;
+                  $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: postdata,
+                    success:function(data){
+                      alert("hi");
+                    }
+                  });
+
+              });
+            });
+          </script>
+
+
           <div class="w-form-done">
             <div>Thank you! Your submission has been received!</div>
           </div>
