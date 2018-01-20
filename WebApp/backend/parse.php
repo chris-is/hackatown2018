@@ -21,7 +21,7 @@
     $c = 2 * asin(sqrt($a));
     $d = $earth * $c;
 
-    if($d<100){
+    if($d<$radius){
       echo "within city";
       $query = "INSERT INTO `client` (`message`) VALUES (?)";
       $stmt = $db->prepare($query);
