@@ -56,13 +56,13 @@
               $(".stpostbutton").click(function() {
                 var update = $('#text').val();
                 var postdata = "message="+update;
-                alert(postdata);
+                //alert(postdata);
                   $.ajax({
                     type: "POST",
                     url: url,
                     data: postdata,
                     success:function(data){
-                      alert("hi");
+                      alert(data);
                     }
                   });
                 });
