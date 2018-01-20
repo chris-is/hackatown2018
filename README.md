@@ -1,3 +1,3 @@
-# hackatown2018
-# localhost
+
+# hackatown2018 project
 
