@@ -84,6 +84,7 @@
       echo $python;
       //$accuracy = substr($python, 0, 2);
       echo "before python";
+      echo "before python";
 
       //exec('mainNLP.py', $result);
       //print_r($result);
