@@ -44,25 +44,22 @@
 
 
     if($d<$radius){
-      echo "within city";
+      //echo "within city";
+
+      //Insert issue into DB
       $id = mt_rand();
       $geolocation = $user_lat . "," . $user_long;
       $query = "INSERT INTO `client` (`id`, `issue_id`, `message`, `geolocation`, `time`) VALUES (?, ?, ?, ?, ?)";
       $stmt = $db->prepare($query);
       $stmt->execute([$id, $id, $message, $geolocation, $date]);
-      //echo '<script language="javascript">';
-      //echo 'alert("message successfully sent")';
-      //echo '</script>';
 
-      //Call python to check if keywords are legit
-      $command = 'python python.py ';
+      //Call python to check keywords
+      $command = 'python python.py ' . $id;
       $python = `$command`;
       $accuracy = substr($python, 0, 2);
 
       if($accuracy === "ok"){
-        echo "thank you for the report! \n";
-
-        //Add keyword to priority
+        //Get issue keyword from DB
         $query = "SELECT keyword from client where id=?";
         $stmt = $db->prepare($query);
         $stmt->execute([$id]);
@@ -80,6 +77,7 @@
         $keywords[5] = "traffic,";
 
 
+        //Check keyword priority
         $i=0;
         $j=99;
         $priority = -1;
@@ -95,9 +93,7 @@
           $i++;
         }
 
-        echo "priority after keyword: " . $priority . "\n";
-
-        //Add location to priority
+        //Check if issue has been reported, if yes delete issue
         $query = "SELECT `id`, `geolocation`, `keyword` from client";
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -122,13 +118,13 @@
           if($d<0.1){
 
             if(strcmp($user_keyword, $other_keyword) == 0){
-              echo $id . " " . $other_id . "\n";
-              $query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
-              $stmt = $db->prepare($query);
-              $stmt->execute([$id, $other_id]);
-              //$query = "DELETE FROM client where id=?";
+              //echo $id . " " . $other_id . "\n";
+              //$query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
               //$stmt = $db->prepare($query);
-              //$stmt->execute([$other_id]);
+              //$stmt->execute([$id, $other_id]);
+              $query = "DELETE FROM client where id=?";
+              $stmt = $db->prepare($query);
+              $stmt->execute([$other_id]);
             }
             
           }
@@ -136,21 +132,20 @@
           
         }
 
-        //echo "priority after geo: " . $priority . "\n";
-
+        //Redirect to php file for image checking
 
         header("Location: http://localhost/mtlwatch/WebApp/backend/sendinfo.php");
         exit();
 
       }
       else{
-        echo "inaccurate report";
+        echo "Your report was detected to be inaccurate. Please try again.";
       }
     }
 
 
     else{
-      echo "not within city";
+      echo "You are not reporting from within city bounds. Please try again.";
     }
 
     

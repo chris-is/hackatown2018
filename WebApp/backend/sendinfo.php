@@ -1,4 +1,5 @@
 <?php
+  echo "Your message was successfully sent. Thanks for the tip!";
   require 'database.php';
   $db = getDB();
 
@@ -15,8 +16,6 @@
       "fight" => "abc",
     );
 
-
-    echo "redirected \n";
     $status = 2;
 
     //See which issues should be alerted

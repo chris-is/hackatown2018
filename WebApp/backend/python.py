@@ -2,4 +2,5 @@
 
 import sys
 
-print "ok";
+#print sys.argv[1];
+print "no";
