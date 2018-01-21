@@ -21,15 +21,40 @@
     $c = 2 * asin(sqrt($a));
     $d = $earth * $c;
 
+    // Call Google TimeZone API and retrieve file contents
+    $string = 'https://maps.googleapis.com/maps/api/timezone/json?location=' . $user_lat . ',' . $user_long . '&timestamp=1458000000&key=AIzaSyAcT_M6NuZAfszwSSV5mvmw9zD9ut7FwYo';
+    //echo $string;
+
+    
+    $output = file_get_contents($string);
+
+    $json_a = json_decode($output, true);
+    foreach($json_a as $key => $value) {
+      if($key == "timeZoneId")
+      {
+        $city=$value;
+      }
+    }
+
+    /*$date = new DateTime(null, new DateTimeZone($city));
+    echo $timestamp = $date->format('U');*/
+    date_default_timezone_set($city);
+
+    $date = date('h:i:s a', time());
+    
+
+    //echo file_get_contents($string);
     if($d<$radius){
-      echo "within city";
-      $query = "INSERT INTO `client` (`message`) VALUES (?)";
+      //echo "within city";
+      $query = "INSERT INTO `client` (`message`,`time`) VALUES (?,?)";
       $stmt = $db->prepare($query);
-      $stmt->execute([$message]);
+      $stmt->execute([$message,$date]);
       echo '<script language="javascript">';
       echo 'alert("message successfully sent")';
       echo '</script>';
     }
+
+
     else{
       echo "not within city";
     }
