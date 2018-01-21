@@ -20,6 +20,7 @@ $(document).ready(function(){
           data: postdata,
           success: function(data){
             $('.w-form').html(data);
+            $("#about").css("padding-bottom", "450px");
           }
       });
       }
