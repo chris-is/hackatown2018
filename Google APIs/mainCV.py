@@ -5,6 +5,7 @@ import CV.placeCV as pc
 import subprocess
 import DB.dataController as dc
 import service.util as ut
+from json import dumps
 
 event = dict()
 location = dict()
@@ -13,11 +14,12 @@ err_msg = ""
 #set google credential to app instance
 def setCredential():
     #must be changed to ~/GoogleAPIs/Hackatown2018-3dd19556fe93.json on server
-    msg = subprocess.check_output('export GOOGLE_APPLICATION_CREDENTIALS=~/Desktop/GoogleAPIs/OAuth/Hackatown2018-3dd19556fe93.json',shell=True)       
+    msg = subprocess.check_output('export GOOGLE_APPLICATION_CREDENTIALS=~/public_html/GoogleAPIs/OAuth/Hackatown2018-3dd19556fe93.json',shell=True)       
     
 def process_input(img):
-    if not setCredential() :
-        print ("Credential Defined")
+    if not setCredential():
+        #print ("Credential Defined")
+        x=1
     else:
         print ("Abort, cannot authenticate cloud credential")
         sys.exit ("Cannot authenticate")
@@ -29,23 +31,18 @@ def process_input(img):
     		#ToDO use syntax analyis here to deterine which keywords are events
     		# accept enitity with score above 70
     		if (dc.priorityEventInclusion(sub_entity['description'])==1):
-    			event[sub_entity['description']]=sub_entity["score"]
-    print(event)
+    			event[sub_entity['description']]="\""+str(sub_entity["score"])+"\""
 
     locationResponse=pc.locationAnalyze(img)
+    print(locationResponse)
     for entity in locationResponse["responses"]:
-    	for sub_entity in entity["landmarkAnnotations"]:
-    		# if description is not empty then
-    		if 'description' in sub_entity:
-    			location[sub_entity['description']]=sub_entity['score']
-    		break
-    print(location)	
-    			
+    	if 'landmarkAnnotations' in entity:
+            for sub_entity in entity["landmarkAnnotations"]:
+                # if description is not empty then
+                if 'description' in sub_entity:
+                    location[sub_entity['description']]="\""+str(sub_entity['score'])+"\""
+                    break
     #return event
-    							
-
-if __name__ == '__main__':
-     process_input("demo_pic/lm3.jpg")
-     #print(oc.logoAnalyze("demo_pic/logo.jpg"))
-     #print(oc.ocrAnalyze("demo_pic/ocr.jpg"))
-     #print(pc.locationAnalyze("demo_pic/lm3.jpg"))
+    jsonString = "{\"Event\":"+dumps(event)+",\"Location\":"+dumps(location)+"}" 
+    print(jsonString)
+    return jsonString							

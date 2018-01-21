@@ -10,7 +10,7 @@ ADP = ('https://{api}.googleapis.com/'
 # imageAnalyze method analyze sentiments and entities
 # Input: Image Output: JSON
 def locationAnalyze(photo_file):
-    print("Analyzing image. ")
+    #print("Analyzing image. ")
     # create http header
     httpAddress = httplib2.Http()
     # credentials with authroization

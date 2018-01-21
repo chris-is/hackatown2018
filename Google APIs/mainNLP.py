@@ -3,6 +3,7 @@ import subprocess
 import NLP.syntax as sa
 import service.util as ut
 import DB.dataController as dc
+from json import loads, dumps
 
 # entity types from enums.Entity.Type
 entity_type = ('UNKNOWN', 'PERSON', 'LOCATION', 'ORGANIZATION',
@@ -19,12 +20,13 @@ err_msg = ""
 #set google credential to app instance
 def setCredential():
     #must be changed to ~/GoogleAPIs/Hackatown2018-3dd19556fe93.json on server
-    msg = subprocess.check_output('export GOOGLE_APPLICATION_CREDENTIALS=~/Desktop/GoogleAPIs/OAuth/Hackatown2018-3dd19556fe93.json',shell=True)       
+    msg = subprocess.check_output('export GOOGLE_APPLICATION_CREDENTIALS=~/public_html/GoogleAPIs/OAuth/Hackatown2018-3dd19556fe93.json',shell=True)       
              
 #process the input through sentiment & entity    
 def process_input(text):
     if not setCredential() :
-        print ("Credential Defined")
+        #print ("Credential Defined")
+        x=1
     else:
         print ("Abort, cannot authenticate cloud credential")
         sys.exit ("Cannot authenticate")
@@ -39,7 +41,7 @@ def process_input(text):
             if(dc.checkLocation(entity['name'])!=1):
                 relevance = entity['salience']
                 location_entity = entity ['name']
-                location[location_entity]=relevance
+                location[location_entity]="\""+str(relevance)+"\""
                 # else the location is no good
         if entity["type"] == "ORGANIZATION":
             # an organization should have mless weight because
@@ -47,13 +49,13 @@ def process_input(text):
             # specific than a street
             relevance = int(entity['salience'])*secondary_location_shift;
             location_entity = entity ['name']
-            location[location_entity]=relevance
+            location[location_entity]="\""+str(relevance)+"\""
         # search for any event mentioning
         if entity["type"] == "EVENT":
             if(dc.checkEvent(entity['name'])!=1):
                 relevance = entity['salience']
                 event_entity = entity ['name']
-                event[event_entity]=relevance
+                event[event_entity]="\""+str(relevance)+"\""
         # ToDo: add syntax processing to undertsand if no words or events have been found
         
         if(ut.is_empty(location)):
@@ -62,8 +64,16 @@ def process_input(text):
             err_msg = err_msg+"Sorry we cannot find an event, please enter an event such as Flooding"      
            
     # this line should be removed
-    print(location)
-    print(event)           
-              
-if __name__ == '__main__':
-     process_input("There is an armed robbery with a person held a gun point")
+    jsonString = "{\"Location\":"+dumps(location)+",\"Event\":"+dumps(event)+"}" 
+    return jsonString
+
+
+
+
+
+
+
+
+
+
+
