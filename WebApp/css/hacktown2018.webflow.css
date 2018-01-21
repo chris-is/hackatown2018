@@ -243,7 +243,7 @@ p {
 }
 
 .footer {
-  padding-top: 35px;
+  margin-top: 56em;  
   padding-bottom: 35px;
 }
 
@@ -535,6 +535,16 @@ p {
   background-image: -webkit-linear-gradient(270deg, #e64c40, #e64c40);
   background-image: linear-gradient(180deg, #e64c40, #e64c40);
   font-style: normal;
+}
+
+.stpostbutton {
+  margin-top: 31px;
+  padding: 13px 25px;
+  background-image: -webkit-linear-gradient(270deg, #e64c40, #e64c40);
+  background-image: linear-gradient(180deg, #e64c40, #e64c40);
+  font-style: normal;
+  font-family: Impact;
+  color: #fff;
 }
 
 html.w-mod-js *[data-ix="fade-in-bottom-page-loads"] {
