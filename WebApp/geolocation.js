@@ -9,8 +9,10 @@ $(document).ready(function(){
       }
       function showPosition(position) {
         var update = $('#text').val();
-        var latitude = position.coords.latitude; 
-        var longitude = position.coords.longitude; 
+        //var latitude = position.coords.latitude; 
+        //var longitude = position.coords.longitude; 
+        var latitude = 45.55; 
+        var longitude = -73.535; 
         var postdata = "latitude="+latitude+"&longitude="+longitude+"&message="+update;//+"&g-recaptcha-response="+ grecaptcha.getResponse();
         console.log(postdata);
         var base_url="http://localhost/mtlwatch/WebApp/backend/GoogleAPIs/";
