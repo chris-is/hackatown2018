@@ -13,7 +13,7 @@ $(document).ready(function(){
         var longitude = position.coords.longitude; 
         var postdata = "latitude="+latitude+"&longitude="+longitude+"&message="+update;//+"&g-recaptcha-response="+ grecaptcha.getResponse();
         console.log(postdata);
-        var base_url="http://localhost/mtlwatch/WebApp/backend/";
+        var base_url="http://localhost/mtlwatch/WebApp/backend/GoogleAPIs/";
         var url = base_url+'parse';
         $.ajax({
           type: "POST",
@@ -24,6 +24,7 @@ $(document).ready(function(){
               $('.captcha').html("CAPTCHA verification failed.");
             }
             else{
+              console.log(data);
               $('.w-form').html(data);
               $("#about").css("padding-bottom", "450px");
             }

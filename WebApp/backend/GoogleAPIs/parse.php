@@ -79,9 +79,16 @@
       $stmt->execute([$id, $id, $message, $geolocation, $date]);
 
       //Call python to check keywords
-      $command = 'python python.py ' . $id;
+      $command = 'python3 mainNLP.py';
       $python = `$command`;
-      $accuracy = substr($python, 0, 2);
+      echo $python;
+      //$accuracy = substr($python, 0, 2);
+      echo "before python";
+
+      //exec('mainNLP.py', $result);
+      //print_r($result);
+      echo "after python";
+      $accuracy ="ok";
 
       if($accuracy === "ok"){
         //Get issue keyword from DB
@@ -159,8 +166,8 @@
 
         //Redirect to php file for image checking
 
-        header("Location: http://localhost/mtlwatch/WebApp/backend/sendinfo.php");
-        exit();
+        //header("Location: http://localhost/mtlwatch/WebApp/backend/sendinfo.php");
+        //exit();
 
       }
       else{

@@ -1,7 +1,7 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 
-require '../../vendor/autoload.php';
+require '../../../vendor/autoload.php';
 
 $app = new \Slim\App;
 

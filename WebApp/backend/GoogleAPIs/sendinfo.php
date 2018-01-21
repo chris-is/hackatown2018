@@ -3,11 +3,11 @@
   require 'database.php';
   $db = getDB();
 
-  $command = 'python python.py ';
-  $python = `$command`;
-  $match = substr($python, 0, 2);
+  //$command = 'python python.py ';
+  //$python = `$command`;
+  //$match = substr($python, 0, 2);
 
-  if($match === "ok"){
+  if(1==1){
     $service = array(
       "fire" => "fire department",
       /*
