@@ -11,7 +11,7 @@ $(document).ready(function(){
         var update = $('#text').val();
         var latitude = position.coords.latitude; 
         var longitude = position.coords.longitude; 
-        var postdata = "latitude="+latitude+"&longitude="+longitude+"&message="+update+"&g-recaptcha-response="+ grecaptcha.getResponse();
+        var postdata = "latitude="+latitude+"&longitude="+longitude+"&message="+update;//+"&g-recaptcha-response="+ grecaptcha.getResponse();
         console.log(postdata);
         var base_url="http://localhost/mtlwatch/WebApp/backend/";
         var url = base_url+'parse';
