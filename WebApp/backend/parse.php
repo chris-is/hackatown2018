@@ -11,7 +11,7 @@
     $mtl_long = -73.5673;
 
     $earth = 6371; //Earth radius
-    $radius = 100; //radius of MTL island
+    $radius = 10; //radius of MTL island
 
     // Harversine Formula
     $distance_lat = deg2rad($mtl_lat - $user_lat);
@@ -63,14 +63,22 @@
         echo "thank you for the report! \n";
 
         //Add keyword to priority
-        $user_keyword = "theft";
+        $query = "SELECT keyword from client where id=?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$id]);
+        $key = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user_keyword = $key['keyword'];
+        $user_keyword = "fire";
 
         $keywords = array();
 
-        $keywords[0] = "fire,tsunami,earthquake,flood,explosion,bomb";
-        $keywords[1] = "murder,assassination";
-        $keywords[2] = "theft,mugging,fight";
-        $keywords[3] = "traffic";
+        $keywords[0] = "fire,tsunami,earthquake,flood,blizzard,snowstorm,hurricane,tornado,wildfire,avalanche,thunderstorm,eruption";
+        $keywords[1] = "murder,assassination,homicide,assault,rape,suicide,terrorism,terrorist,stabbing";
+        $keywords[2] = "kidnap,kidnapping,hostage,stabbing,";
+        $keywords[3] = "theft,mugging,fight,robbery,harassment,threat,arms,armed,gun,accident";
+        $keywords[4] = "mischief,disturbance,disturb,assault,";
+        $keywords[5] = "traffic,";
+
 
         $i=0;
         $j=99;
@@ -90,16 +98,17 @@
         echo "priority after keyword: " . $priority . "\n";
 
         //Add location to priority
-        $query = "SELECT `id`, `geolocation` from client";
+        $query = "SELECT `id`, `geolocation`, `keyword` from client";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $all_loc = $stmt->fetchAll();
         
         foreach($all_loc as $value){
           $other_loc = explode(',', $value['geolocation']);
-          $other_id = $value['id'];
           $other_lat = $other_loc['0'];
           $other_long = $other_loc['1'];
+          $other_id = $value['id'];
+          $other_keyword = $value['keyword'];
 
           $distance_lat = deg2rad($other_lat - $user_lat);
           $distance_long = deg2rad($other_long - $user_long);
@@ -111,11 +120,17 @@
           //echo $d;
 
           if($d<0.1){
-            echo $id . " " . $other_id . "\n";
-            //$priority = $priority + 1;
-            $query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
-            $stmt = $db->prepare($query);
-            $stmt->execute([$id, $other_id]);
+
+            if(strcmp($user_keyword, $other_keyword) == 0){
+              echo $id . " " . $other_id . "\n";
+              $query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
+              $stmt = $db->prepare($query);
+              $stmt->execute([$id, $other_id]);
+              //$query = "DELETE FROM client where id=?";
+              //$stmt = $db->prepare($query);
+              //$stmt->execute([$other_id]);
+            }
+            
           }
 
           
@@ -123,7 +138,9 @@
 
         //echo "priority after geo: " . $priority . "\n";
 
-        
+
+        header("Location: http://localhost/mtlwatch/WebApp/backend/sendinfo.php");
+        exit();
 
       }
       else{
