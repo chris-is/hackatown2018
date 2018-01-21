@@ -139,6 +139,9 @@
 
       }
       else{
+        $query = "DELETE FROM client where id=?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$id]);
         echo "Your report was detected to be inaccurate. Please try again.";
       }
     }
