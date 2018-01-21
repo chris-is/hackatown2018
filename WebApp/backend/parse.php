@@ -41,6 +41,7 @@
     date_default_timezone_set($city);
 
     $date = date('h:i:s a', time());
+    echo $date;
 
 
     if($d<$radius){
