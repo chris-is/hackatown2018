@@ -42,6 +42,7 @@
 
     $date = date('h:i:s a', time());
 
+
     if($d<$radius){
       echo "within city";
       $id = mt_rand();
@@ -80,13 +81,15 @@
 
 
         $i=0;
+        $j=99;
         $priority = -1;
         while($i<sizeof($keywords)){
           $keyword_row = explode(',', $keywords[$i]);
           
           foreach($keyword_row as $value){
             if (strcmp($user_keyword, $value) == 0){
-              $priority = $i;
+              $priority = $i + $j;
+              $j=$j-2;
             }
           }
           $i++;
@@ -117,6 +120,7 @@
           //echo $d;
 
           if($d<0.1){
+
             if(strcmp($user_keyword, $other_keyword) == 0){
               echo $id . " " . $other_id . "\n";
               $query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
@@ -132,17 +136,19 @@
           
         }
 
-        echo "priority after geo: " . $priority . "\n";
+        //echo "priority after geo: " . $priority . "\n";
+
 
         header("Location: http://localhost/mtlwatch/WebApp/backend/sendinfo.php");
         exit();
-
 
       }
       else{
         echo "inaccurate report";
       }
     }
+
+
     else{
       echo "not within city";
     }
