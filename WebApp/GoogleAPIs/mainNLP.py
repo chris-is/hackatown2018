@@ -1,14 +1,9 @@
-#!usr/bin/python
-import sys
-
 import NLP.entity as et
 import subprocess
 import NLP.syntax as sa
 import service.util as ut
 import DB.dataController as dc
 from json import loads, dumps
-
-
 
 # entity types from enums.Entity.Type
 entity_type = ('UNKNOWN', 'PERSON', 'LOCATION', 'ORGANIZATION',
@@ -72,7 +67,9 @@ def process_input(text):
     #jsonString = "{\"Location\":"+dumps(location)+",\"Event\":"+dumps(event)+"}" 
     #return jsonString
 
-print("avalanche")
+    return "avalanche"
+
+
 
 
 

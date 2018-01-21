@@ -79,17 +79,17 @@
       $stmt->execute([$id, $id, $message, $geolocation, $date]);
 
       //Call python to check keywords
-      $command = 'python3 mainNLP.py';
-      $python = `$command`;
-      echo $python;
+      //$command = 'python3 mainNLP.py';
+      //$python = `$command`;
+      //echo $python;
       //$accuracy = substr($python, 0, 2);
-      echo "before python";
       echo "before python";
 
       //exec('mainNLP.py', $result);
       //print_r($result);
       echo "after python";
       $accuracy ="ok";
+      $python = "avalnache";
 
       if($accuracy === "ok"){
         //Get issue keyword from DB
