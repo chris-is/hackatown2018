@@ -8,6 +8,7 @@
 
   try{
     //Verify captcha
+    /*
     $post_data = http_build_query(
       array(
         'secret' => "6LcSvDsUAAAAADrn86cZ6nfGAFWn_tgxUogddin9",
@@ -28,7 +29,7 @@
     if (!$result->success) {
         echo "captcha";
     }
-    else{
+    else{*/
 
     $mtl_lat = 45.5017;
     $mtl_long = -73.5673;
@@ -139,13 +140,15 @@
 
           //echo $d;
 
-          if($d<0.1){
+          if($d<0.2){
 
             if(strcmp($user_keyword, $other_keyword) == 0){
               //echo $id . " " . $other_id . "\n";
               //$query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
               //$stmt = $db->prepare($query);
               //$stmt->execute([$id, $other_id]);
+
+              //Delete similar past issues
               $query = "DELETE FROM client where id=?";
               $stmt = $db->prepare($query);
               $stmt->execute([$other_id]);
@@ -174,7 +177,7 @@
     }
 
     
-  }
+  //}
   }
   catch(Exception $e) {
     echo "Error";
