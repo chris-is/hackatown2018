@@ -473,7 +473,7 @@ p {
 }
 
 .paragraph-3 {
-  width: 500px;
+  max-width: 500px;
 }
 
 .heading-2 {
