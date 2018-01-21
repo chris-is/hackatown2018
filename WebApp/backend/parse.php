@@ -41,19 +41,7 @@
     date_default_timezone_set($city);
 
     $date = date('h:i:s a', time());
-<<<<<<< HEAD
-    
 
-    //echo file_get_contents($string);
-    if($d<$radius){
-      //echo "within city";
-      $query = "INSERT INTO `client` (`message`,`time`) VALUES (?,?)";
-      $stmt = $db->prepare($query);
-      $stmt->execute([$message,$date]);
-      echo '<script language="javascript">';
-      echo 'alert("message successfully sent")';
-      echo '</script>';
-=======
 
     if($d<$radius){
       echo "within city";
@@ -85,13 +73,15 @@
         $keywords[3] = "traffic";
 
         $i=0;
+        $j=99;
         $priority = -1;
         while($i<sizeof($keywords)){
           $keyword_row = explode(',', $keywords[$i]);
           
           foreach($keyword_row as $value){
             if (strcmp($user_keyword, $value) == 0){
-              $priority = $i;
+              $priority = $i + $j;
+              $j=$j-2;
             }
           }
           $i++;
@@ -122,7 +112,7 @@
 
           if($d<0.1){
             echo $id . " " . $other_id . "\n";
-            $priority = $priority - 0.1;
+            //$priority = $priority + 1;
             $query = "UPDATE `client` SET `issue_id`=? WHERE `id`=?";
             $stmt = $db->prepare($query);
             $stmt->execute([$id, $other_id]);
@@ -131,14 +121,14 @@
           
         }
 
-        echo "priority after geo: " . $priority . "\n";
+        //echo "priority after geo: " . $priority . "\n";
 
+        
 
       }
       else{
         echo "inaccurate report";
       }
->>>>>>> master
     }
 
 
