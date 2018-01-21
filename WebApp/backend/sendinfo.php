@@ -28,11 +28,24 @@
       "assault" =>,
       "rape" =>,
       "suicide" =>,
-      "terrorist" =>,*/
-      "robbery" => "police",
-      "terrorist" => "police",
-      "tsunami" => "weather department",
-      "fight" => "abc",
+      "terrorist" =>,
+      "stabbing" =>,
+      "kidnap" =>,
+      "hostage" =>,
+      "stabbing" =>,
+      "theft" =>,
+      "mugging" =>,
+      "fight" =>,
+      "robbery" =>,
+      "harassment" =>,
+      "threat" =>,
+      "arms" =>,
+      "gun" =>,*/
+      "accident" => "police",
+      "mischief" => "police",
+      "disturbance" => "weather department",
+      "assault" => "abc",
+      "traffic" => "def",
     );
 
     $status = 2;

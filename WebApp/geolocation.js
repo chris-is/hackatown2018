@@ -21,7 +21,6 @@ $(document).ready(function(){
           data: postdata,
           success: function(data){
             if(data === "captcha"){
-              $('.captcha').empty();
               $('.captcha').html("CAPTCHA verification failed.");
             }
             else{
