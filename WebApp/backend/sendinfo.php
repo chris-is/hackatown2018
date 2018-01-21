@@ -1,5 +1,5 @@
 <?php
-  echo "Your message was successfully sent. Thanks for the tip!";
+  echo "Your message was successfully sent. Thanks for the tip!\n";
   require 'database.php';
   $db = getDB();
 
@@ -10,6 +10,25 @@
   if($match === "ok"){
     $service = array(
       "fire" => "fire department",
+      /*
+      "tsunami" =>,
+      "earthquake" =>,
+      "flood" =>,
+      "blizzard" =>,
+      "snowstorm" =>,
+      "hurricane" =>,
+      "tornado" =>,
+      "wildfire" =>,
+      "avalance" =>,
+      "thunderstorm" =>,
+      "eruption" =>,
+      "murder" =>,
+      "assassination" =>,
+      "homicide" =>,
+      "assault" =>,
+      "rape" =>,
+      "suicide" =>,
+      "terrorist" =>,*/
       "robbery" => "police",
       "terrorist" => "police",
       "tsunami" => "weather department",
@@ -27,13 +46,13 @@
     //Check which department should be alerted
     foreach($keywords as $value){
       $val = $value['keyword'];
-      echo $service[$val];
+      echo $service[$val] . "was alerted about the issue.";
     }
 
 
   }
   else{
-    echo "no";
+    echo "Issue reported was inaccurate.";
   }
 
 
