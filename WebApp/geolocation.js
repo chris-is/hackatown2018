@@ -10,7 +10,7 @@ $(document).ready(function(){
         var update = $('#text').val();
         var latitude = position.coords.latitude; 
         var longitude = position.coords.longitude; 
-        var postdata = "latitude="+latitude+"&longitude="+longitude+"&message="+update;
+        var postdata = "latitude="+latitude+"&longitude="+longitude+"&message="+"&g-recaptcha-response="+ grecaptcha.getResponse();
         console.log(postdata);
         var base_url="http://localhost/mtlwatch/WebApp/backend/";
         var url = base_url+'parse';
@@ -19,8 +19,14 @@ $(document).ready(function(){
           url: url,
           data: postdata,
           success: function(data){
-            $('.w-form').html(data);
-            $("#about").css("padding-bottom", "450px");
+            if(data === "captcha"){
+              $('.captcha').empty();
+              $('.captcha').html("CAPTCHA verification failed.");
+            }
+            else{
+              $('.w-form').html(data);
+              $("#about").css("padding-bottom", "450px");
+            }
           }
       });
       }
