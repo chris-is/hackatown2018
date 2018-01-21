@@ -19,7 +19,7 @@ $(document).ready(function(){
           url: url,
           data: postdata,
           success: function(data){
-            console.log(data);
+            $('.w-form').html(data);
           }
       });
       }
